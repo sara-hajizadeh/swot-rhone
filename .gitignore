@@ -1,0 +1,12 @@
+data/
+#SWOT files:
+*.nc 
+*.zip
+#Python environment:
+.venv/  
+#Files Python:
+__pycache__/ 
+#Passwords (exa: Earthdata):
+.env
+#hidden file macOS:
+.DS_Store
