@@ -1,0 +1,17 @@
+[project]
+name = "swot-rhone"
+version = "0.1.0"
+requires-python = ">=3.10"
+description = "SWOT water levels, slopes and discharge on the lower Rhône"
+readme = "README.md"
+dependencies = [
+    "earthaccess",
+    "xarray",
+    "netCDF4",
+    "pandas",
+    "geopandas",
+    "pyarrow",
+    "numpy",
+    "matplotlib",
+    "pyyaml",
+]
