@@ -1,0 +1,10 @@
+river:
+  name: Rhône
+  # lon_min, lat_min, lon_max, lat_max
+  bbox: [4.40, 43.60, 4.90, 44.30]
+  start_reach: "21602300881" # most upstream main-channel reach, near Bollène
+  end_reach: "21602100025" # below the last dam, before the split at Arles
+
+time:
+  start: "2023-07-21" # start of SWOT science orbit
+  end: null # today
