@@ -13,6 +13,16 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
   - The first search mixed Reach and Node files → filtered by file name.
   - An older download included 9 Cal/Val files (cycles ≥ 400) → removed.
   - The bbox includes tributaries (Gardon, Durance, Cèze) → main channel selected by SWORD topology.
+
+### Flags (3,892 clean observations)
+
+- reach_q: 0=105, 1=3,511, 2=275, 3=1 → keep ≤1 (keeping only 0 would lose 97%).
+- xovr_cal_q: 0=3,748, 1=19, 2=125 → keep ≤1.
+- ice_clim_f: -999 (not available)=2,280, 0=1,612, no ice → not used. Note: -999 is a second fill value for integer flags.
+- partial_f: 280 partial → kept, to test later.
+- dark_frac: median 0.06, 75th percentile 0.47 → remove > 0.5.
+- wse_u: median 0.11 m, max 0.86 m.
+
 - **Open questions:** …
 
 ## 2. SWOT RiverSP (Node)

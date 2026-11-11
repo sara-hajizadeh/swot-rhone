@@ -8,3 +8,8 @@ river:
 time:
   start: "2023-07-21" # start of SWOT science orbit
   end: null # today
+
+qc:
+  max_reach_q: 1 # keep good and suspect (90% of data are "suspect")
+  max_xovr_cal_q: 1 # remove bad crossover calibration
+  max_dark_frac: 0.5 # remove reaches more than half dark water
