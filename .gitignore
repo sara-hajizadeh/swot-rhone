@@ -10,3 +10,5 @@ __pycache__/
 .env
 #hidden file macOS:
 .DS_Store
+#it holds installation metadata
+*.egg-info/
