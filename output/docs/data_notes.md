@@ -23,6 +23,12 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 - dark_frac: median 0.06, 75th percentile 0.47 → remove > 0.5.
 - wse_u: median 0.11 m, max 0.86 m.
 
+### Flag QC result
+
+- Kept 2,755 of 3,892 (70.8%).
+- Removed by reach_q: 276 (7.1%), xovr_cal_q: 125 (3.2%), dark_frac > 0.5: 925 (23.8%).
+- Dark water is the main reason for removal. 189 rows fail more than one test.
+
 - **Open questions:** …
 
 ## 2. SWOT RiverSP (Node)
