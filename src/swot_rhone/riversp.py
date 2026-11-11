@@ -46,7 +46,7 @@ def clean_reaches(reaches: pd.DataFrame, stem: list[str]) -> pd.DataFrame:
 
     numeric = df.select_dtypes("number").columns
     df[numeric] = df[numeric].mask(df[numeric] < FILL)
-
+    df = df.copy()
     df["datetime"] = pd.to_datetime(df["time_str"], utc=True, errors="coerce", format="ISO8601")
     df = df.dropna(subset=["datetime", "wse"])
 
