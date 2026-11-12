@@ -4,7 +4,7 @@ import geopandas as gpd
 import pandas as pd
 import yaml
 
-from swot_rhone.products import pixc_per_reach
+from swot_rhone.products import  median_per_reach
 
 with open("config/rhone.yaml") as f:
     cfg = yaml.safe_load(f)
@@ -16,7 +16,7 @@ stem = set(qc["reach_id"])
 reaches = gpd.read_parquet("data/interim/reach_raw.parquet").drop_duplicates("reach_id")
 reaches = reaches[reaches["reach_id"].isin(stem)]
 
-per_reach = pixc_per_reach(pixc, reaches)
+per_reach = median_per_reach(pixc, reaches)
 
 river = qc[(qc["cycle"] == ov["cycle"]) & (qc["pass_id"] == ov["pass_id"])]
 river = river.set_index("reach_id")[["p_dist_out", "wse", "qc_pass"]]

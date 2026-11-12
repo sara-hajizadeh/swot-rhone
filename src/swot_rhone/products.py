@@ -10,6 +10,8 @@ import geopandas as gpd
 PIXC_VARS = ["height", "geoid", "solid_earth_tide", "load_tide_fes", "pole_tide",
              "water_frac", "pixel_area"]
 
+RASTER_VARS = ["latitude", "longitude", "wse", "wse_qual", "wse_uncert", "water_frac", "n_wse_pix"]
+
 
 def read_pixc(path: Path, bbox: tuple[float, float, float, float],
               classes: tuple[int, ...] = (3, 4)) -> pd.DataFrame:
@@ -32,7 +34,7 @@ def read_pixc(path: Path, bbox: tuple[float, float, float, float],
     df["tile"] = path.stem.split("_")[6]
     return df.dropna(subset=["wse"])
 
-def pixc_per_reach(pixc: pd.DataFrame, reaches: gpd.GeoDataFrame,
+def  median_per_reach(pixc: pd.DataFrame, reaches: gpd.GeoDataFrame,
                    max_dist: float = 300.0) -> pd.DataFrame:
     """Assign pixels to the nearest reach within max_dist metres; median WSE per reach."""
     points = gpd.GeoDataFrame(
@@ -42,3 +44,19 @@ def pixc_per_reach(pixc: pd.DataFrame, reaches: gpd.GeoDataFrame,
 
     joined = gpd.sjoin_nearest(points, lines, max_distance=max_dist, how="inner")
     return joined.groupby("reach_id").agg(n_pixels=("wse", "size"), wse_pixc=("wse", "median"))
+
+
+
+
+def read_raster(path: Path, bbox: tuple[float, float, float, float],
+                max_qual: int = 1) -> pd.DataFrame:
+    """Read Raster cells with a valid WSE inside the bbox."""
+    with xr.open_dataset(path) as ds:
+        df = ds[RASTER_VARS].to_dataframe().reset_index()
+
+    lon_min, lat_min, lon_max, lat_max = bbox
+    inside = df["longitude"].between(lon_min, lon_max) & df["latitude"].between(lat_min, lat_max)
+    df = df[inside & df["wse"].notna() & (df["wse_qual"] <= max_qual)].copy()
+    df["scene"] = path.stem.split("_")[12]
+    return df
+

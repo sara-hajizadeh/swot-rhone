@@ -92,11 +92,19 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 ## 4. SWOT Raster
 
 - **Search (full period, bbox):** 2,542 files, ~86 GB.
-- **Finding:** the spatial search returned scenes from other UTM zones (e.g. UTM60W).
+- the spatial search returned scenes from other UTM zones (e.g. UTM60W).
   The Rhône is in UTM31T → filtered by file name `*_100m_UTM31T_*`.
 - **Decision:** same overpass as PIXC (cycle 024, pass 292, 2024-11-22), 100 m resolution.
 - **Downloaded:** 2 scenes (038F, 039F), 117 MB, about 18 times smaller than PIXC for the same overpass.
-- **Findings:** …
+- **Findings:**
+- Raster read: 65,896 valid water cells (wse_qual ≤ 1) in the bbox; WSE −29 to 315 m
+  (other water bodies included → selection by distance to main channel).
+- Raster vs RiverSP: median |diff| = 0.032 m (PIXC vs RiverSP: 0.027 m).
+  → For normal reaches the three products agree within a few cm.
+- Same large differences at the three dam reaches and the bbox-cut reach.
+  Reach 21602300091: PIXC +3.51 m but Raster −1.94 m vs RiverSP → the reach value depends on
+  which pixels/cells fall on each side of the step: a reach-level WSE across a dam is ill-defined.
+- 46–828 Raster cells per reach vs 794–19,146 PIXC pixels: much less data, same answer.
 
 ## 5. SWORD
 
