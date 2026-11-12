@@ -2,4 +2,5 @@
 reach_q,276,7.1
 xovr_cal_q,125,3.2
 dark_frac,925,23.8
-kept (all tests passed),2755,70.8
+spike,25,0.6
+kept (all tests passed),2730,70.1

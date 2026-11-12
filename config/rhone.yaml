@@ -13,3 +13,4 @@ qc:
   max_reach_q: 1 # keep good and suspect (90% of data are "suspect")
   max_xovr_cal_q: 1 # remove bad crossover calibration
   max_dark_frac: 0.5 # remove reaches more than half dark water
+  max_spike_m: 3.0 # just above the 99th percentile of spike sizes (2.84 m)

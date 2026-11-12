@@ -29,6 +29,16 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 - Removed by reach_q: 276 (7.1%), xovr_cal_q: 125 (3.2%), dark_frac > 0.5: 925 (23.8%).
 - Dark water is the main reason for removal. 189 rows fail more than one test.
 
+- Reach 21602100045 median WSE (QC-passed) = 1.17 m, consistent with neighbours (1.98 m upstream, 0.90 m downstream); its spikes at −3 to −10 m are therefore errors.
+
+### Spike test
+
+- Spike size (on flag-passed data): median 0.04 m, 95% 1.0 m, 99% 2.84 m, max 11.0 m.
+- Threshold 3 m (just above the 99th percentile).
+- 9 of the 10 largest spikes are on reach 21602100045 (WSE −3 to −10 m, impossible ~67 km from the sea), recurring 2024–2026 → reach-specific problem, to investigate with PIXC/PIXCVec.
+
+- Spike test (> 3 m): 25 removed (0.6%). Final kept: 2,730 of 3,892 (70.1%).
+
 - **Open questions:** …
 
 ## 2. SWOT RiverSP (Node)
