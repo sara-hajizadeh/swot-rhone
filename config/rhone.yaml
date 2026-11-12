@@ -14,3 +14,8 @@ qc:
   max_xovr_cal_q: 1 # remove bad crossover calibration
   max_dark_frac: 0.5 # remove reaches more than half dark water
   max_spike_m: 3.0 # just above the 99th percentile of spike sizes (2.84 m)
+
+overpass:
+  cycle: "024" # chosen by scripts/06_choose_overpass.py
+  pass_id: "292"
+  date: "2024-11-22"
