@@ -41,6 +41,14 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 
 - **Open questions:** …
 
+### Figures
+
+- Profile: 107 passes covering ≥70% of the main channel. Three dam steps at ~119, ~98 and ~72 km; flat pools between them.
+- Variability is large at the upstream end of pools (e.g. 39–45 m at 152 km) and small just upstream of dams (level held by operation).
+- Reach 21602300881 (152 km): flood peaks up to +5 m.
+- Reach 21602300041 (100 km, upstream of a dam): stable ~25 m with drops to ~22 m at flood times → likely pool drawdown during floods (to confirm with CNR operations).
+- Reach 21602100025 (59 km, below the last dam): −0.4 to +4.4 m, follows floods → free-flowing.
+
 ## 2. SWOT RiverSP (Node)
 
 - **Plan:** Hydrocron API, Rhône nodes only (full Node files ≈ 36 GB)
