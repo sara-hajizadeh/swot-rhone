@@ -49,6 +49,12 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 - Reach 21602300041 (100 km, upstream of a dam): stable ~25 m with drops to ~22 m at flood times → likely pool drawdown during floods (to confirm with CNR operations).
 - Reach 21602100025 (59 km, below the last dam): −0.4 to +4.4 m, follows floods → free-flowing.
 
+### Overpass for the product comparison
+
+- Cycle 024, pass 292, 2024-11-22 (19/19 reaches after QC, median dark_frac 0.0076).
+- PIXC: 3 tiles (077L, 078L, 078R), 2,108 MB. Raster 100 m UTM31T: 2 scenes (038F, 039F), 117 MB.
+- The river section is observed in ~20 s.
+
 ## 2. SWOT RiverSP (Node)
 
 - **Plan:** Hydrocron API, Rhône nodes only (full Node files ≈ 36 GB)
@@ -58,12 +64,39 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 
 - **Search:** 630 files, ~400 GB for the full period (~630 MB per tile)
 - **Decision:** one pass, one date only
-- **Findings:** …
+- Why: downloading the full period is not possible on a laptop, and one overpass is enough to
+  compare PIXC with Raster and RiverSP.
+- How the overpass was chosen: from the QC'd RiverSP data, ranking passes by number of
+  main-channel reaches observed, then by median dark_frac (scripts/06_choose_overpass.py).
+- Chosen: cycle 024, pass 292, 2024-11-22 (19/19 reaches, median dark_frac 0.0076).
+- **Downloaded:** 3 tiles (077L, 078L, 078R), 2,108 MB.
+- **Structure:** one tile ≈ 6.3 million pixels and 62 variables (~2 GB if fully loaded),
+  so only the needed variables and pixels are loaded.
+- **WSE:** height − geoid − solid_earth_tide − load_tide_fes − pole_tide
+  (height_cor_xover is already applied; confirmed from the variable comments in the file).
+- **Classes kept:** 3 (water_near_land) and 4 (open_water). Dark water (5) excluded.
+- **Findings:**
+- PIXC read: 449,600 water pixels (classes 3+4) in the bbox; 077L 290,789, 078L 158,811, 078R 0
+  (the Rhône is entirely on the left swath for this pass).
+- 59% class 3 (water near land): the river is narrow, so many pixels touch a bank.
+- WSE: median 25.0 m (matches the ~25 m pool level in RiverSP), but min −31 m and max 1,219 m:
+  single pixels are noisy, and the bbox includes other water bodies → per-reach median needed.
+- PIXC vs RiverSP (same overpass, median WSE of pixels within 300 m of each main-channel reach):
+  median |diff| = 0.027 m over 19 reaches → the products agree to a few cm.
+- Large differences only at the three dam reaches (+3.51 m at 119 km, −3.18 m at 98 km,
+  −3.04 m at 72 km): a reach containing a 9–13 m step has no single meaningful WSE;
+  RiverSP gives an intermediate value, the PIXC median follows the side with more pixels.
+- Reach 21602300881: −1.86 m because the bbox (north edge 44.30°) cuts the reach, so only its
+  lower part was read → limitation of my setup; fix by extending the bbox for PIXC.
 
 ## 4. SWOT Raster
 
-- **Search:** 2,542 files, ~86 GB
-- **Findings:** the spatial search returned scenes from other UTM zones (e.g. UTM60W). The Rhône is in UTM31T → filtered by file name `*_100m_UTM31T_*`.
+- **Search (full period, bbox):** 2,542 files, ~86 GB.
+- **Finding:** the spatial search returned scenes from other UTM zones (e.g. UTM60W).
+  The Rhône is in UTM31T → filtered by file name `*_100m_UTM31T_*`.
+- **Decision:** same overpass as PIXC (cycle 024, pass 292, 2024-11-22), 100 m resolution.
+- **Downloaded:** 2 scenes (038F, 039F), 117 MB, about 18 times smaller than PIXC for the same overpass.
+- **Findings:** …
 
 ## 5. SWORD
 
