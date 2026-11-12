@@ -19,3 +19,6 @@ overpass:
   cycle: "024" # chosen by scripts/06_choose_overpass.py
   pass_id: "292"
   date: "2024-11-22"
+
+figures:
+  zoom_extent: [4.70, 43.88, 4.88, 44.00] # around Avignon
