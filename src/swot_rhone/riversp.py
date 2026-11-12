@@ -40,7 +40,7 @@ def main_channel(reaches: pd.DataFrame, start: str, end: str) -> list[str]:
     return path
 
 
-def clean_reaches(reaches: pd.DataFrame, stem: list[str]) -> pd.DataFrame:
+def clean_reaches(reaches: pd.DataFrame, stem: list[str], start: str) -> pd.DataFrame:
     """Keep main-channel reaches with a real observation, one row per reach and pass."""
     df = reaches[reaches["reach_id"].isin(stem)].copy()
 
@@ -49,6 +49,7 @@ def clean_reaches(reaches: pd.DataFrame, stem: list[str]) -> pd.DataFrame:
     df = df.copy()
     df["datetime"] = pd.to_datetime(df["time_str"], utc=True, errors="coerce", format="ISO8601")
     df = df.dropna(subset=["datetime", "wse"])
+    df = df[df["datetime"] >= pd.Timestamp(start, tz="UTC")]
 
     df = df.join(df["granule"].str.extract(GRANULE)).copy()
     df["rank"] = (df["crid"].str[1] == "G") * 100 + df["counter"].astype(int)

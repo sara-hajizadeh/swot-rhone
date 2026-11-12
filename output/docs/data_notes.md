@@ -7,7 +7,8 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 - **Product:** SWOT_L2_HR_RiverSP_D (version D), Reach files, Europe (EU)
 - **Access:** PO.DAAC through earthaccess, filtered by bbox, dates and file name `*Reach*_EU_*`
 - **Period:** 2023-07-21 (start of science orbit) to today
-- **Volume:** 1,136 files, ~6 GB (each file = one pass over Europe)
+- **Volume:** 1,145 files (~6 GB): 1,136 from the science orbit + 9 Cal/Val files (cycles ≥ 400)
+  from an older download. Checked: 0 observations before 2023-07-21 remain after cleaning.
 - **Read:** 16,389 rows × 128 columns, 68 reaches inside the bbox
 - **Findings:**
   - The first search mixed Reach and Node files → filtered by file name.
