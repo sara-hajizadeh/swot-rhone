@@ -1,0 +1,4 @@
+version,seconds,rows,columns,table_mb
+A. baseline (all columns),20.3,16389,128,17.9
+B. needed columns,19.1,16389,19,5.2
+C. B + 10 processes,5.2,16389,19,5.2

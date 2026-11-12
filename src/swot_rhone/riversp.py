@@ -55,3 +55,21 @@ def clean_reaches(reaches: pd.DataFrame, stem: list[str]) -> pd.DataFrame:
     df = df.sort_values("rank").drop_duplicates(["reach_id", "cycle", "pass_id"], keep="last")
 
     return df.drop(columns="rank").sort_values(["reach_id", "datetime"]).reset_index(drop=True)
+
+
+def read_one(f: Path, bbox: tuple[float, float, float, float],
+             columns: list[str] | None = None) -> gpd.GeoDataFrame:
+    """Read one zipped Reach shapefile inside the bbox (empty if no reach)."""
+    gdf = gpd.read_file(f"zip://{f}", bbox=bbox, columns=columns)
+    gdf["granule"] = f.stem
+    return gdf
+
+
+def read_reaches(files: list[Path], bbox: tuple[float, float, float, float],
+                 columns: list[str] | None = None) -> gpd.GeoDataFrame:
+    """Read zipped RiverSP Reach shapefiles and keep reaches inside the bbox."""
+    frames = [read_one(f, bbox, columns) for f in files]
+    frames = [g for g in frames if not g.empty]
+    if not frames:
+        raise ValueError("no reaches found inside the bbox")
+    return gpd.GeoDataFrame(pd.concat(frames, ignore_index=True), crs=frames[0].crs)

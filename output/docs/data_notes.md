@@ -135,6 +135,22 @@ Running notes on each dataset: what it is, how I got it, what I found, and the d
 
 - Not done yet.
 
+## 8. Benchmark: reading RiverSP Reach files (scripts/18_benchmark.py)
+
+- Input: 1,145 zipped shapefiles (~6 GB), bbox filter. Hardware: Apple Silicon (arm), 10 CPU cores.
+- A. Baseline (all 128 columns, sequential): 20.8 s, 17.9 MB table.
+- B. Needed columns only (19): 19.3 s (1.1×), 5.2 MB (−71% memory).
+- C. B + 10 processes: 5.3 s (3.9×), same 5.2 MB.
+- Correctness: C gives exactly the same rows and WSE values as A.
+- Interpretation: time is dominated by opening each file and filtering by bbox, not by parsing
+  columns; parallel speed-up is below 10× because of process overhead, shared disk access and
+  the serial concatenation.
+- Results saved in output/benchmarks/read_benchmark.csv.
+
+- Two runs gave nearly identical times (A 20.8 / 20.3 s, C 5.3 / 5.2 s): results are reproducible,
+  the disk cache has little effect, and the work is CPU-bound (unzipping, spatial filtering),
+  which is why parallel processes help.
+
 ## Open questions
 
 - Reach 21602100045: why recurring values at −3 to −10 m? Check with PIXC/PIXCVec (pixels from below
